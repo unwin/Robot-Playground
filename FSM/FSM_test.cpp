@@ -1,3 +1,10 @@
+/**
+    Purpose: Implement a simple single level Finite State Machine (FSM)
+
+    @author Roger Unwin
+    @version 0.1 10-17-2012
+**/
+
 #include <iostream>
 #include <ostream>
 #include <string>
