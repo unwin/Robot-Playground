@@ -11,6 +11,14 @@ to use as you see fit.
 
 Roger Unwin
 
+Ideas on where to possibly take this next
+-----------------------------------------
+* Add generic timer interupt mechanism.
+* Modify to be a heirchical state machine.
+* Add image capture module, opencv image object recognition.
+* Port to AVR.
+* Add in ZeroMQ for communicattions.
+
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 This program is free software; you can redistribute it and/or modify it under
