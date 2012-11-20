@@ -1,6 +1,11 @@
-#include <pthread.h>
-#include "FSM_Exceptions.h"
 
+
+
+#ifndef SIMPLE_THREAD_H_
+#define SIMPLE_THREAD_H_
+
+#include "FSM_Exceptions.h"
+#include <pthread.h>
 using namespace std;
 
 class SimpleThread {
@@ -61,3 +66,4 @@ private:
    }
 };
 
+#endif /* SIMPLE_THREAD_H_ */
