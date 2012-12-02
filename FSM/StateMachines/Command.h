@@ -17,6 +17,7 @@
 #include "../FSM_Exceptions.h"
 #include "../FSM.h"
 #include "../State.h"
+#include "../log.h"
 
 using namespace std;
 
@@ -32,11 +33,11 @@ class Autonomous : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Autonomous::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Autonomous::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 
@@ -50,11 +51,11 @@ class Guided : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Guided::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Guided::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 

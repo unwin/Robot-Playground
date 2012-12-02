@@ -6,6 +6,9 @@
 
 #include "FSM_Exceptions.h"
 #include <pthread.h>
+
+#include "log.h"
+
 using namespace std;
 
 class SimpleThread {
@@ -34,7 +37,8 @@ public:
    void StopWorker() {
 	   run = false;
 	   (void) pthread_join(worker_thread, NULL);
-	   std::cout << " StopWorker - thread stopped. " << std::endl;
+
+	   LOG << "SimpleThread::StopWorker - thread stopped.";
    }
 
 
@@ -45,7 +49,7 @@ protected:
 		   try {
 			   DoWork();
 		   } catch( NotImplemented &E ) {
-			   std::cout << "GOT EXCEPTION = " << E.what() << std::endl;
+			   ERROR << "GOT EXCEPTION = " << E.what();
 		   }
 		   usleep(this->run_interval);
 	   }

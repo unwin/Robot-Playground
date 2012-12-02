@@ -16,6 +16,7 @@
 #include "../FSM_Exceptions.h"
 #include "../FSM.h"
 #include "../State.h"
+#include "../log.h"
 using namespace std;
 
 
@@ -30,12 +31,12 @@ class Unknown : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
-		};
+			LOG << "Unknown::onEnter - " << this->getName();
+		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
-		};
+			LOG << "Unknown::DoWork - " << this->getName() << " COUNT = " << count++;
+		}
 };
 
 class Operational : public State {
@@ -48,11 +49,11 @@ class Operational : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Operational::onEnter - " << this->getName();
 		};
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Operational::DoWork - " << this->getName() << " COUNT = " << count++;
 		};
 };
 
@@ -66,11 +67,11 @@ class Stuck : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Stuck::onEnter - " << this->getName();
 		};
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Stuck::DoWork - " << this->getName() << " COUNT = " << count++;
 		};
 };
 
@@ -84,11 +85,11 @@ class Blocked : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Blocked::onEnter - " << this->getName();
 		};
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Blocked::DoWork - " << this->getName() << " COUNT = " << count++;
 		};
 };
 

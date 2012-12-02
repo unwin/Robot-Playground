@@ -16,6 +16,7 @@
 #include "../FSM_Exceptions.h"
 #include "../FSM.h"
 #include "../State.h"
+#include "../log.h"
 
 using namespace std;
 
@@ -31,11 +32,11 @@ class Connected : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Connected::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Connected::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 
@@ -49,11 +50,11 @@ class Disconnected : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Disconnected::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Disconnected::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 

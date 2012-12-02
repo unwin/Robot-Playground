@@ -16,6 +16,7 @@
 #include "../FSM_Exceptions.h"
 #include "../FSM.h"
 #include "../State.h"
+#include "../log.h"
 using namespace std;
 
 class Unknown : public State {
@@ -28,14 +29,13 @@ class Unknown : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Unknown::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Unknown::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
-
 
 class Operational : public State {
 	private:
@@ -47,11 +47,11 @@ class Operational : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Operational::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Operational::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 
@@ -65,11 +65,11 @@ class Impaired : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Impaired::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Impaired::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 
@@ -83,11 +83,11 @@ class Nonfunctional : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Nonfunctional::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Nonfunctional::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 
@@ -102,11 +102,11 @@ class Imaging : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Imaging::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Imaging::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 

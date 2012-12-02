@@ -10,6 +10,7 @@
 
 #include "../FSM_Exceptions.h"
 #include "../State.h"
+#include "../log.h"
 
 #include <iostream>
 #include <ostream>
@@ -35,11 +36,11 @@ class Dormant : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Dormant::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Dormant::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 
@@ -53,11 +54,11 @@ class Operational : public State {
 		};
 
 		void onEnter ()  {
-			std::cout << this->getName() << " Offline::onEnter " << std::endl;
+			LOG << "Operational::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Operational::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 
@@ -71,11 +72,11 @@ class Active : public State {
 		};
 
 		void onEnter ()  {
-			std::cout << this->getName() << " Offline::onEnter " << std::endl;
+			LOG << "Active::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Active::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 
@@ -89,11 +90,11 @@ class Disabled : public State {
 		};
 
 		void onEnter ()  {
-			std::cout << this->getName() << " Offline::onEnter " << std::endl;
+			LOG << "Disabled::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Disabled::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 

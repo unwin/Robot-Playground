@@ -16,7 +16,7 @@
 #include "../FSM_Exceptions.h"
 #include "../FSM.h"
 #include "../State.h"
-
+#include "../log.h"
 using namespace std;
 
 
@@ -31,11 +31,11 @@ class Powering_On : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Powering_On::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Powering_On::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 
@@ -49,11 +49,11 @@ class Self_Test : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Self_Test::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Self_Test::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 
@@ -67,11 +67,11 @@ class Powering_Off : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Powering_Off::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Powering_Off::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 
@@ -85,11 +85,11 @@ class Power_Seeking : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Power_Seeking::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Power_Seeking::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 
@@ -103,11 +103,11 @@ class Power_Docking : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Power_Seeking::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Power_Seeking::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 
@@ -121,11 +121,11 @@ class Charging : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Charging::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Charging::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 
@@ -139,11 +139,11 @@ class Power_Undocking : public State {
 		};
 
 		void onEnter()  {
-			std::cout << "**" << this->getName() << "::onEnter()" << std::endl;
+			LOG << "Power_Undocking::onEnter - " << this->getName();
 		}
 
 		void DoWork() {
-			std::cout << this->getName() <<"::DoWork() COUNT = " << count++ << std::endl;
+			LOG << "Power_Undocking::DoWork - " << this->getName() << " COUNT = " << count++;
 		}
 };
 

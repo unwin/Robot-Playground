@@ -44,3 +44,31 @@ ACQUIRING_IMAGE
 
 Offline 
 Offline
+
+
+I think that there will be lots of FSM's and they will be created on the fly eventually, so a database will be a better solution.
+
+TABLE: FSM
+
+FSM_NAME:
+FSM_STATE:
+
+Table: STATES
+STATE_NAME: varchar
+STATE_HEARTBEAT_INTERVAL: seconds
+STATE_ON_HEARTBEAT: function
+STATE_ON_ENTER: function
+STATE_ON_EXIT: function
+
+TABLE: STATE_TRANSITIONS
+STATE_NAME: varchar
+COMMAND: varchar
+NEXT_STATE: varchar
+
+
+
+
+
+
+
+

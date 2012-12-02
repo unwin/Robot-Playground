@@ -16,17 +16,7 @@
 #include "SimpleThread.h"
 #include <boost/unordered_map.hpp>
 #include "State.h"
-/*
-#include "StateMachines/Command.h"
-#include "StateMachines/Communication.h"
-#include "StateMachines/Master.h"
-#include "StateMachines/Power.h"
-#include "StateMachines/Problem.h"
-#include "StateMachines/Vision.h"
-*/
-
-
-
+#include "log.h"
 
 class FSM {
 	private:
@@ -50,7 +40,7 @@ class FSM {
 
 		void addState(State *s) {
 			string sn = s->getName();
-			std::cout << "ADDING STATE NAME '" << sn << "'." << std::endl;
+			LOG << "FSM::addState ADDING STATE NAME '" << sn << "'.";
 			states[sn] = s;
 		}
 
@@ -74,20 +64,20 @@ class FSM {
 
 
 		void transitionToState(string new_state_name) {
-			std::cout << "in transitionToState(" << new_state_name << ")" << std::endl;
+			LOG << "FSM::transitionToState(" << new_state_name << ")";
 
 			State *new_state = states.at(new_state_name);
-			cout << "NEW STATE = " << new_state->getName() << endl;
+			LOG << "FSM::transitionToState NEW STATE = " << new_state->getName();
 
 			if (new_state != NULL)
 				change_state(new_state);
 			else
-				std::cout << "NEW STATE NAME '" << new_state_name << "' NOT FOUND." << std::endl;
-			std::cout << " transitionToState EXITING " << std::endl;
+				ERROR << "FSM::transitionToState NEW STATE NAME '" << new_state_name << "' NOT FOUND.";
+			LOG << "FSM::transitionToState  EXITING ";
 		}
 
 		void executeCommand(string command) {
-			std::cout << "in executeCommand() CURRENT_STATE NOW " << current_state->getName() << std::endl;
+			LOG << "FSM::executeCommand CURRENT_STATE NOW " << current_state->getName();
 			if (current_state->hasCommand(command)) {
 				State *new_state = current_state->execute_command(command);
 				change_state(new_state);

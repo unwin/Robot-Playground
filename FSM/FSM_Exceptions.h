@@ -4,12 +4,13 @@
  *  Created on: Nov 2, 2012
  *      Author: Unwin
  */
-#include <exception>
+
 #ifndef FSM_EXCEPTIONS_H_
 #define FSM_EXCEPTIONS_H_
 
+#include <exception>
 #define DEFAULT_REASON "Reason Not specified. Please MOCK the programmer."
-
+#include "log.h"
 
 using namespace std;
 
@@ -29,7 +30,7 @@ public:
 
     const char* what()  {
     	string s = "StateException : " + this->reason + " " + std::exception::what();
-    	std::cout << s << std::endl;
+    	ERROR << s;
     	return s.c_str();
     }
 
@@ -53,7 +54,7 @@ public:
 
     const char* what()  {
 		string s = "StateException : " + this->reason + " " + std::exception::what();
-		std::cout << s << std::endl;
+		ERROR << s;
 		return s.c_str();
     }
 };
@@ -81,4 +82,5 @@ public:
     }
 
 };
+
 #endif /* FSM_EXCEPTIONS_H_ */

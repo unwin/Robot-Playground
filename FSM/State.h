@@ -7,6 +7,7 @@ using namespace std;
 #include <ostream>
 #include <string>
 #include "SimpleThread.h"
+#include "log.h"
 #include <boost/unordered_map.hpp>
 
 class State : public SimpleThread {
@@ -22,18 +23,18 @@ class State : public SimpleThread {
 
 		State(std::string name) : SimpleThread() {
 			this->name = name;
-			std::cout <<  "::State() name = " << name << std::endl;
+			LOG <<  "State::State() name = " << name;
 		};
 
 		virtual ~State() {
 		};
 
 		virtual void onEnter()  {
-			std::cout << getName() << "::onEnter()" << std::endl;
+			LOG << "State::onEnter - " << getName() ;
 		}
 
 		virtual void onExit()  {
-			std::cout  << getName() << "::onExit()" << std::endl;
+			LOG << "State::onExit - " << getName();
 		}
 
 		virtual string getName()  {
@@ -56,7 +57,7 @@ class State : public SimpleThread {
 		};
 
 		void InternalThreadEntry() {
-			std::cout << "State thread" << std::endl;
+			LOG << "State::InternalThreadEntry";
 			usleep(10);
 		}
 };
