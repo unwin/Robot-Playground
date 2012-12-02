@@ -133,6 +133,10 @@ void foo() {
 	LOG << "FSM_test " << "CURRENT STATE: " << f->getCurrentState();
 	sleep(2);
 
+	LOG << "delete fsm";
+	delete fsm;
+	LOG << "delete f";
+	delete f;
 	LOG << "FSM_test " << "EXITING";
 	sleep(2);
 }
