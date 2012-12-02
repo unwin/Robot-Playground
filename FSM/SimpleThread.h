@@ -21,10 +21,10 @@ public:
 	}
 
 	SimpleThread(int run_interval) {
-			run = false;
-			worker_thread = NULL;
-			this->run_interval = run_interval;
-		}
+		run = false;
+		worker_thread = NULL;
+		this->run_interval = run_interval;
+	}
 
 	virtual ~SimpleThread() {
 

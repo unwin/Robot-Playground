@@ -38,6 +38,18 @@ class FSM {
 			current_state = NULL; // switch to nullptr;
 		}
 
+		~FSM() {
+			for (state_map::iterator it = states.begin(); it != states.end(); ++it) {
+				LOG << "FSM::~FSM deleting " << it->first;
+				State *s = it->second;
+				if (s == current_state) {
+					s->StopWorker();
+					s->onExit();
+				}
+				delete s;
+			}
+		}
+
 		void addState(State *s) {
 			string sn = s->getName();
 			LOG << "FSM::addState ADDING STATE NAME '" << sn << "'.";
