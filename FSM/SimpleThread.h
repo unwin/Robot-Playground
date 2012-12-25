@@ -11,18 +11,23 @@
 
 using namespace std;
 
+#define nullptr 0
 class SimpleThread {
 	// stolen from http://stackoverflow.com/questions/1151582/pthread-function-from-a-class
 public:
 	SimpleThread() {
 		run = false;
-		worker_thread = NULL;
+		worker_thread = nullptr;
 		this->run_interval = 1000000;
-	}
+	};
+
+	void SetRunInterval(int interval) {
+		this->run_interval = interval;
+	};
 
 	SimpleThread(int run_interval) {
 		run = false;
-		worker_thread = NULL;
+		worker_thread = nullptr;
 		this->run_interval = run_interval;
 	}
 

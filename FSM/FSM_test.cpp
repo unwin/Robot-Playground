@@ -20,6 +20,9 @@
 #include "State.h"
 
 #include "StateMachines/Problem.h"
+
+#include "i2c/BMP085.h"
+
 using namespace std;
 
 #include "log.h"

@@ -12,6 +12,7 @@
 #include <ostream>
 #include <string>
 #include <map>
+#include "opencv2/opencv.hpp"
 
 #include "../FSM_Exceptions.h"
 #include "../FSM.h"
@@ -95,18 +96,44 @@ class Imaging : public State {
 
 	private:
 		int count;
+		cv::VideoCapture *cap;
+		cv::Mat edges;
+		cv::Mat *frame;
 
 	public:
 		Imaging() : State("Imaging")  {
 			count = 0;
+			cap = NULL;
+			frame = NULL;
+		};
+
+		~Imaging() : State("Imaging")  {
+			if (cap->isOpened())
+				cap->release();
+				cap = NULL;
+			if (frame != NULL)
+				frame = NULL;
 		};
 
 		void onEnter()  {
 			LOG << "Imaging::onEnter - " << this->getName();
+
+			cap = new cv::VideoCapture(0);
+			if (!cap->isOpened())
+				cap = NULL;
+			cv::namedWindow("Imaging",1);
 		}
 
 		void DoWork() {
 			LOG << "Imaging::DoWork - " << this->getName() << " COUNT = " << count++;
+			frame = new cv::Mat();
+			cap->read(*frame);
+			cv::imshow("Imaging", *frame);
+			cv::cvtColor(*frame, edges, CV_BGR2GRAY);
+			GaussianBlur(edges, edges, cv::Size(7,7), 1.5, 1.5);
+			Canny(edges, edges, 0, 30, 3);
+			cv::imshow("Imaging", edges);
+
 		}
 };
 
