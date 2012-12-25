@@ -45,7 +45,6 @@ i2c::~i2c() {
 
 void i2c::connect(int deviceI2CAddress) {
 	//LOG << "in connect before it all";
-
 	if (ioctl(deviceHandle, I2C_SLAVE, deviceI2CAddress) < 0)
 		throw IoError("Could not ioctl 12c device ");
 

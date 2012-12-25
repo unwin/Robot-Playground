@@ -38,8 +38,8 @@ namespace logging = boost::log;
 namespace attrs = boost::log::attributes;
 namespace src = boost::log::sources;
 
-#ifndef LOG_CPP_
-#define LOG_CPP_
+//#ifndef LOG_CPP_
+//#define LOG_CPP_
 
 
 
@@ -96,12 +96,27 @@ types::formatter_type my_scopes_formatter_factory(types::string_type const& attr
 	return types::formatter_type(scope_list_formatter(attr_name));
 }
 
-//src::severity_logger< >& lg = test_lg::get();
+
 
 
 Logger::Logger() {
+    // First thing - register the custom formatter for MyScopes
+    logging::register_formatter_factory("MyScopes", &my_scopes_formatter_factory);
 
-	lg = 0;
+    // Then load the settings from the file
+    std::ifstream settings("settings.txt");
+    if (!settings.is_open())
+        throw std::runtime_error("Could not open settings.txt file");
+    logging::init_from_stream(settings);
+
+    // Add some attributes
+    logging::add_common_attributes();
+
+    logging::core::get()->add_global_attribute("MyScopes", attrs::named_scope());
+
+
+	lg = &test_lg::get();
+
 };
 
 Logger* Logger::m_pInstance = NULL;
@@ -116,8 +131,12 @@ Logger* Logger::Instance()
    return m_pInstance;
 };
 
+Logger *l = Logger::Instance();
 
-src::severity_logger< >& init_logging() {
+
+
+/*
+void init_logging(Logger * l) {
     // First thing - register the custom formatter for MyScopes
     logging::register_formatter_factory("MyScopes", &my_scopes_formatter_factory);
 
@@ -134,17 +153,13 @@ src::severity_logger< >& init_logging() {
 
 
 	src::severity_logger< >& lg = test_lg::get();
-	return lg;
+	l->lg = &lg;
 }
-
+*/
+/*
 int main(int argc, char** argv) {
 
 
-	src::severity_logger< >& _lg_ = init_logging();
-	Logger *l = Logger::Instance();
-	l->lg = &_lg_;
-
-	src::severity_logger< >& lg = _lg_;
 
 	BOOST_LOG(*Logger::Instance()->lg) << "LOGGING STARTED";
 	BOOST_LOG_SEV(*Logger::Instance()->lg, critical) << "test";
@@ -157,9 +172,9 @@ int main(int argc, char** argv) {
     BOOST_LOG_SEV(*Logger::Instance()->lg, error) << "This is a error severity record";
 	//throw IoError("Did not write enough bytes, should probably loop this...");
 }
+*/
 
-
-#endif /* LOG_CPP_ */
+//#endif /* LOG_CPP_ */
 
 
 

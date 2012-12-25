@@ -45,20 +45,20 @@ public:
 
 private:
    Logger();  // Private so that it can  not be called
-   //Logger(Logger const&){ };       // copy constructor is private
+   //Logger(Logger const&){};       // copy constructor is private
    //Logger& operator=(Logger const&){};  // assignment operator is private
    static Logger* m_pInstance;
 };
 
-//Logger *l = Logger::Instance();
 
-/*
-#define LOG BOOST_LOG_SEV(l->lg, normal)
-#define LOG_NOTIFICATION BOOST_LOG_SEV(l::lg, notification)
-#define LOG_WARNING BOOST_LOG_SEV(l->lg, warning)
-#define LOG_ERROR BOOST_LOG_SEV(l->lg, error)
-#define LOG_CRITICAL BOOST_LOG_SEV(l->lg, critical)
 
-*/
+
+#define LOG BOOST_LOG_SEV(*Logger::Instance()->lg, normal)
+#define LOG_NOTIFICATION BOOST_LOG_SEV(*Logger::Instance()->lg, notification)
+#define LOG_WARNING BOOST_LOG_SEV(*Logger::Instance()->lg, warning)
+#define LOG_ERROR BOOST_LOG_SEV(*Logger::Instance()->lg, error)
+#define LOG_CRITICAL BOOST_LOG_SEV(*Logger::Instance()->lg, critical)
+
+
 
 #endif /* LOG_H_ */

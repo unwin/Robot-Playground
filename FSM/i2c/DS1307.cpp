@@ -20,6 +20,7 @@
 DS1307::DS1307(int id) : i2c(id)  {
 	i2c_bus = id;
 	device_id = 0x68;
+	connect(device_id);
 };
 
 
@@ -48,7 +49,6 @@ void DS1307::set_time(int h, int m, int s, int wd, int md, int mm, int yy) {
 	ltm->tm_mon = mm;   // month of year from 0 to 11
 	ltm->tm_year = yy - 1900;  // year since 1900
 
-	connect(device_id);
 	char buffer[10];
 	buffer[0] = 0x00; // Command
 	buffer[1] = decToBcd(ltm->tm_sec & 0x7f); // Seconds
@@ -63,7 +63,6 @@ void DS1307::set_time(int h, int m, int s, int wd, int md, int mm, int yy) {
 
 void DS1307::set_time(time_t seconds) {
 	LOG << "set_time - 2 - Entered";
-	//LOG << "Setting Time to " << asctime(localtime ( &seconds ));
 	tm *ltm = localtime(&seconds);
 	// convert now to tm struct for UTC
 	tm *gmtm = gmtime(&seconds);
@@ -77,7 +76,6 @@ void DS1307::set_time(time_t seconds) {
 	LOG << "Month " << gmtm->tm_mon;   // month of year from 0 to 11
 	LOG << "Year " << gmtm->tm_year;  // year since 1900
 
-	connect(device_id);
 	char buffer[10];
 	buffer[0] = 0x00; // Command
 	buffer[1] = decToBcd(gmtm->tm_sec & 0x7f); // Seconds
@@ -98,7 +96,6 @@ void DS1307::set_time() {
 	LOG << "set_time - 3 - Entered";
 	time_t seconds = time(0);
 	tm *gmtm = gmtime(&seconds);
-	connect(device_id);
 	char buffer[10];
 	buffer[0] = 0x00; // Command
 	buffer[1] = decToBcd(gmtm->tm_sec); // Seconds
@@ -114,8 +111,6 @@ void DS1307::set_time() {
 void DS1307::get_time() {
 	LOG << "get_time - Entered";
 
-	connect(device_id);
-	LOG << "after connect";
 	char buffer[10];
 
 	buffer[0] = (char)0;
