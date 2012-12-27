@@ -55,9 +55,10 @@
 
 #include "i2c.h"
 
-class ADXL345 : public i2c {
+class ADXL345 {
 	private:
-		int i2c_bus;
+		int i2c_bus_id;
+		i2c *i2c_bus;
 		int device_id;
 	public:
 		ADXL345(int id);

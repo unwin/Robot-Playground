@@ -17,10 +17,11 @@
 #include "DS1307.h"
 
 
-DS1307::DS1307(int id) : i2c(id)  {
-	i2c_bus = id;
+DS1307::DS1307(int id)  {
+	i2c_bus_id = id;
+	i2c_bus = i2c::Instance(id);
 	device_id = 0x68;
-	connect(device_id);
+	i2c_bus->connect(device_id);
 };
 
 
@@ -58,7 +59,7 @@ void DS1307::set_time(int h, int m, int s, int wd, int md, int mm, int yy) {
 	buffer[5] = decToBcd(ltm->tm_mday); // DayOfMonth
 	buffer[6] = decToBcd(ltm->tm_mon); // Month
 	buffer[7] = decToBcd(ltm->tm_year - 100); // Year
-	write_bytes(buffer, 8);
+	i2c_bus->write_bytes(buffer, 8);
 }
 
 void DS1307::set_time(time_t seconds) {
@@ -87,7 +88,7 @@ void DS1307::set_time(time_t seconds) {
 	LOG << "Y1 = " << gmtm->tm_year - 100;
 	LOG << "Y2 = " << decToBcd(gmtm->tm_year - 100);
 	buffer[7] = decToBcd(gmtm->tm_year - 100); // Year
-	write_bytes(buffer, 8);
+	i2c_bus->write_bytes(buffer, 8);
 
 
 }
@@ -105,7 +106,7 @@ void DS1307::set_time() {
 	buffer[5] = decToBcd(gmtm->tm_mday); // DayOfMonth
 	buffer[6] = decToBcd(gmtm->tm_mon); // Month
 	buffer[7] = decToBcd(gmtm->tm_year - 100); // Year
-	write_bytes(buffer, 8);
+	i2c_bus->write_bytes(buffer, 8);
 }
 
 void DS1307::get_time() {
@@ -114,8 +115,8 @@ void DS1307::get_time() {
 	char buffer[10];
 
 	buffer[0] = (char)0;
-	write_bytes(buffer, 1);
-	int bytes_read = read_bytes(7, buffer);
+	i2c_bus->write_bytes(buffer, 1);
+	int bytes_read = i2c_bus->read_bytes(7, buffer);
 	assert(bytes_read == 7);
 	LOG << dec << "0 - SECOND - " << int(bcdToDec(buffer[0] & 0x7f));
 	LOG << dec << "1 - MINUTE - " << int(bcdToDec(buffer[1]));

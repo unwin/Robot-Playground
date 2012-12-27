@@ -28,17 +28,6 @@ using namespace std;
 #define MODE_FUNC 3
 
 
-i2c::i2c(int id) {
-	if (id == 0) {
-		if ((deviceHandle = open("/dev/i2c-0", O_RDWR)) < 0)
-			throw IoError("Could not open /dev/i2c-0");
-	} else if (id == 1) {
-		if ((deviceHandle = open("/dev/i2c-1", O_RDWR)) < 0)
-			throw IoError("Could not open /dev/i2c-1");
-	} else
-		throw IoError("only /dev/i2c-o and /dev/i2c-1 are supported.");
-};
-
 i2c::~i2c() {
 	close(deviceHandle);
 }
@@ -58,11 +47,44 @@ int i2c::read_bytes(int byte_count, char *buffer) {
 }
 
 void i2c::write_bytes(char *buffer, int byte_count) {
-	LOG << "writing to device ";
+	LOG << "writing to device " << byte_count << " bytes.";
+	for (int x = 0; x < byte_count; x++) {
+		LOG << std::hex << buffer[x];
+	}
 	int count = write(deviceHandle, buffer, byte_count);
 	if (count != byte_count)
 		throw IoError("Did not write enough bytes, should probably loop this...");
 }
+
+char i2c::read_register_byte(char reg) {
+	LOG << "entering i2c read_register";
+	return(i2c_smbus_read_byte_data(deviceHandle, reg));
+}
+
+void i2c::write_register_byte(char reg, char val) {
+	LOG << "entering i2c write_register";
+	i2c_smbus_write_byte_data(deviceHandle, reg, val);
+}
+
+short int i2c::read_register_word(char reg) {
+	LOG << "entering i2c read_register";
+	return(i2c_smbus_read_word_data(deviceHandle, reg));
+}
+
+void i2c::write_register_word(char reg, short int val) {
+	LOG << "entering i2c write_register";
+	i2c_smbus_write_word_data(deviceHandle, reg, val);
+}
+
+bool i2c::write_byte(char val) {
+	bool result = i2c_smbus_write_byte(deviceHandle, val);
+	return result;
+};
+char i2c::read_byte() {
+	char val = i2c_smbus_read_byte(deviceHandle);
+	return(val);
+};
+
 
 device_map i2c::scan_bus() {
 	device_map found_ids;
@@ -90,11 +112,16 @@ device_map i2c::scan_bus() {
 					  res = i2c_smbus_read_byte(deviceHandle);
 				else
 					  res = i2c_smbus_write_quick(deviceHandle, I2C_SMBUS_WRITE);
+				break;
 		}
 
 		if (0 == res) {
 			if (0x1E == address)
 				found_ids[address] = "HMC5883";
+			else if (0x27 == address)
+				found_ids[address] = "J204A LCD Display";
+			else if (0x42 == address)
+				found_ids[address] = "SAIN SMART NEO-6M GPS";
 			else if (0x50 == address)
 				found_ids[address] = "AT24C16";
 			else if (0x53 == address)
@@ -111,6 +138,56 @@ device_map i2c::scan_bus() {
 	}
 	return(found_ids);
 }
+/*
+i2c_smbus_write_quick( int file, __u8 value)
+i2c_smbus_read_byte(int file)
+i2c_smbus_write_byte(int file, __u8 value)
+i2c_smbus_read_byte_data(int file, __u8 command)
+i2c_smbus_write_byte_data(int file, __u8 command, __u8 value)
+i2c_smbus_read_word_data(int file, __u8 command)
+i2c_smbus_write_word_data(int file, __u8 command, __u16 value)
+i2c_smbus_process_call(int file, __u8 command, __u16 value)
+i2c_smbus_read_block_data(int file, __u8 command, __u8 *values)
+i2c_smbus_write_block_data(int file, __u8 command, __u8 length, __u8 *values)
+i2c_smbus_read_i2c_block_data(int file, __u8 command, __u8 *values)
+i2c_smbus_write_i2c_block_data(int file, __u8 command, __u8 length, __u8 *values)
+i2c_smbus_block_process_call(int file, __u8 command, __u8 length, __u8 *values)
+ */
+
+
+
+i2c::i2c(int id) {
+	if (id == 0) {
+		if ((deviceHandle = open("/dev/i2c-0", O_RDWR)) < 0)
+			throw IoError("Could not open /dev/i2c-0");
+	} else if (id == 1) {
+		if ((deviceHandle = open("/dev/i2c-1", O_RDWR)) < 0)
+			throw IoError("Could not open /dev/i2c-1");
+	} else
+		throw IoError("only /dev/i2c-o and /dev/i2c-1 are supported.");
+
+};
+
+i2c *i2c::i2c_singleton_instance0 = NULL;
+i2c *i2c::i2c_singleton_instance1 = NULL;
+i2c* i2c::Instance(int id)
+{
+   if (0 == id) {
+	   if (!i2c_singleton_instance0) { // Only allow one instance of class to be generated.
+		   i2c_singleton_instance0 = new i2c(id);
+	   }
+	   return i2c_singleton_instance0;
+   } else if (1 == id) {
+	   if (!i2c_singleton_instance1) { // Only allow one instance of class to be generated.
+	   		   i2c_singleton_instance1 = new i2c(id);
+	   	   }
+	   	   return i2c_singleton_instance1;
+   }
+   return NULL;
+};
+
+i2c *i = i2c::Instance(1);
+
 
 
 #endif /* I2C_HPP_ */

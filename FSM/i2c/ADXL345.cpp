@@ -20,10 +20,11 @@
 using namespace std;
 
 
-ADXL345::ADXL345(int id) : i2c(id)  {
-	i2c_bus = id;
+ADXL345::ADXL345(int id) {
+	i2c_bus_id = id;
 	device_id = 0x53;
-	connect(device_id);
+	i2c_bus = i2c::Instance(id);
+	i2c_bus->connect(device_id);
 
 
 	bool result = set_g_range(G_RANGE_2G);
@@ -31,7 +32,7 @@ ADXL345::ADXL345(int id) : i2c(id)  {
 	char buffer[10];
 	buffer[0] = POWER_CTL;
 	buffer[1] = 0x08;
-	write_bytes(buffer, 2);
+	i2c_bus->write_bytes(buffer, 2);
 	LOG << "exiting ADXL345 constructor";
 }
 
@@ -40,29 +41,19 @@ ADXL345::~ADXL345() {
 }
 
 bool ADXL345::set_g_range(char range) {
-	char buffer[10];
-	buffer[0] = DATA_FORMAT;
-	buffer[1] = range;
-	write_bytes(buffer, 2);
+	i2c_bus->write_register_byte(DATA_FORMAT, range);
 
-	buffer[0] = DATA_FORMAT;
-	int bytes_read = read_bytes(1, buffer);
-	assert(bytes_read == 1);
-	return (buffer[0] == range);
+	char val = i2c_bus->read_register_byte(DATA_FORMAT);
+	assert(val == range);
+	return (true);
 };
 
 void ADXL345::read_acceleration() {
-	char buffer[10];
-	buffer[0] = DATAX0;
-	write_bytes(buffer, 1);
-	int bytes_read = read_bytes(6, buffer);
-	int x = (((int)buffer[1]) << 8) | buffer[0];
-	int y = (((int)buffer[3]) << 8) | buffer[2];
-	int z = (((int)buffer[5]) << 8) | buffer[4];
-
-
-	assert(bytes_read == 6);
+	int x = ((( int)i2c_bus->read_register_byte(DATAX0)) << 8) | (char)i2c_bus->read_register_byte(DATAX1);
+	int y = ((( int)i2c_bus->read_register_byte(DATAY0)) << 8) | (char)i2c_bus->read_register_byte(DATAY1);
+	int z = ((( int)i2c_bus->read_register_byte(DATAZ0)) << 8) | (char)i2c_bus->read_register_byte(DATAZ1);
 	LOG << "x = " << x << " Y = " << y << " z = " << z;
+
 	float xd = (float) x / 65535.0 * 360.0;
 	float yd = (float) y / 65535.0 * 360.0;
 	float zd = (float) z / 65535.0 * 360.0;

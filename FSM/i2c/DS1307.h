@@ -12,9 +12,10 @@
 #include "i2c.h"
 #include "DS1307.h"
 
-class DS1307 : public i2c {
+class DS1307 {
 	private:
-		int i2c_bus;
+		int i2c_bus_id;
+		i2c *i2c_bus;
 		int device_id;
 	public:
 		DS1307(int id);

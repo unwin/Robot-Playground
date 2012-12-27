@@ -5,26 +5,21 @@
  *      Author: unwin
  */
 
+
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE Main
+#include <iostream>
+#include <ostream>
+#include <string>
+#include <map>
+#include <assert.h>
 #include <boost/test/unit_test.hpp>
 #include "../log.h"
 
-
 #include <vector>
-#include <exception>
-using namespace std;
-
-class myexception: public exception
-{
-  virtual const char* what() const throw()
-  {
-    return "My exception happened";
-  }
-} myex;
 
 
-BOOST_AUTO_TEST_SUITE(test_i2c_suite)
+BOOST_AUTO_TEST_SUITE(test_log_suite)
 
 BOOST_AUTO_TEST_CASE(test_default_log)
 {
@@ -67,11 +62,7 @@ BOOST_AUTO_TEST_CASE(misc)
 	BOOST_LOG_SEV(*Logger::Instance()->lg, error) << "This is a error severity record";
 
 	BOOST_LOG_FUNCTION();
-	try {
-	    throw myex;
-	} catch (exception& e) {
-		LOG << "exception caught";
-	}
+
 }
 
 

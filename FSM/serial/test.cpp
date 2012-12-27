@@ -14,8 +14,8 @@
 #include <boost/asio.hpp>
 
 using namespace std;
-/** This code requires 'boost' to be successfully installed and when compiled will require the boost libaries to be included.
-The original code source as of this writting was found here:
+/** This code requires 'boost' to be successfully installed and when compiled will require the boost libraries to be included.
+The original code source as of this writing was found here:
 
 http://www.webalice.it/fede.tft/serial_port/serial_port.html
 
@@ -31,8 +31,7 @@ public:
      * \throws boost::system::system_error if cannot open the
      * serial device
      */
-    SimpleSerial(std::string port, unsigned int baud_rate)
-    : io(), serial(io,port)
+    SimpleSerial(std::string port, unsigned int baud_rate) : io(), serial(io,port)
     {
         serial.set_option(boost::asio::serial_port_base::baud_rate(baud_rate));
     }
@@ -58,7 +57,7 @@ public:
         //Reading data char by char, code is optimized for simplicity, not speed
         using namespace boost;
         char c;
-        std::string result;
+        std::string result; // TODO no idea how this is working. will need to modify it to work with a passed in buffer or something else.
         for(;;)
         {
             asio::read(serial,asio::buffer(&c,1));
@@ -69,9 +68,11 @@ public:
                 case '\n':
                     return result;
                 default:
-                    result+=c;
+                    result += c;
+                    break;
             }
         }
+        return NULL;
     }
 
 private:
