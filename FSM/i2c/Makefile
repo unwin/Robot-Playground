@@ -55,4 +55,4 @@ test_HMC5883: ../log.o I2C_Exceptions.o i2c.o HMC5883.o test/test_HMC5883.o
 	$(CXX) $(CFLAGS) -o $@ $<
 
 clean:
-	rm -f $(OBJS) test_log test_i2c test_DS1307 test_ADXL345 test_L3G4200D test_NEO_6 test_BMP085 test_HMC5883
+	rm -f $(OBJS) test_log test_i2c test_DS1307 test_ADXL345 test_L3G4200D test_NEO_6 test_BMP085 test_HMC5883 test_J2004A
