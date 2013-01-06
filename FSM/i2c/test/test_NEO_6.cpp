@@ -1,37 +1,28 @@
 /*
- * test_ADXL345.cpp
+ * test_NEO_6.cpp
  *
- *  Created on: Dec 25, 2012
+ *  Created on: Dec 28, 2012
  *      Author: unwin
  */
-
 
 
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE Main
 #include <boost/test/unit_test.hpp>
 #include "../../log.h"
-#include "../ADXL345.h"
+#include "../NEO_6.h"
 #include <ctime>
 
 #include <vector>
 
-BOOST_AUTO_TEST_SUITE(test_adxl345_suite)
+BOOST_AUTO_TEST_SUITE(test_NEO_6_suite)
 
-BOOST_AUTO_TEST_CASE(test_adxl345)
+BOOST_AUTO_TEST_CASE(test_NEO_6)
 {
-	float x = 0;
-	float y = 0;
-	float z = 0;
-	LOG << "test_adxl345";
+	LOG << "test_NEO_6";
 
-	ADXL345 *adxl345 = new ADXL345(1);
+	NEO_6 *neo_6 = new NEO_6(1);
 
-	while (1) {
-		adxl345->read_acceleration(x, y, z);
-		LOG << "x = " << x << " y = " << y << " z = " << z;
-		sleep(1);
-	}
 	// Need asserts that it set it correct
 	//BOOST_CHECK( true );
 	//BOOST_ERROR( "some error 1" );
@@ -39,6 +30,4 @@ BOOST_AUTO_TEST_CASE(test_adxl345)
 	//BOOST_FAIL( "Should never reach this line" );
 }
 
-
 BOOST_AUTO_TEST_SUITE_END()
-

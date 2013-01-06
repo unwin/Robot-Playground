@@ -1,9 +1,11 @@
 /*
- * test_ADXL345.cpp
+ * test_BMP085.cpp
  *
- *  Created on: Dec 25, 2012
+ *  Created on: Dec 29, 2012
  *      Author: unwin
  */
+
+
 
 
 
@@ -11,27 +13,24 @@
 #define BOOST_TEST_MODULE Main
 #include <boost/test/unit_test.hpp>
 #include "../../log.h"
-#include "../ADXL345.h"
+#include "../BMP085.h"
 #include <ctime>
 
 #include <vector>
 
-BOOST_AUTO_TEST_SUITE(test_adxl345_suite)
+BOOST_AUTO_TEST_SUITE(test_BMP085_suite)
 
-BOOST_AUTO_TEST_CASE(test_adxl345)
+BOOST_AUTO_TEST_CASE(test_BMP085)
 {
-	float x = 0;
-	float y = 0;
-	float z = 0;
-	LOG << "test_adxl345";
+	LOG << "test_BMP085";
 
-	ADXL345 *adxl345 = new ADXL345(1);
+	BMP085 *bmp085 = new BMP085(1);
 
 	while (1) {
-		adxl345->read_acceleration(x, y, z);
-		LOG << "x = " << x << " y = " << y << " z = " << z;
+		bmp085->read_data();
 		sleep(1);
 	}
+
 	// Need asserts that it set it correct
 	//BOOST_CHECK( true );
 	//BOOST_ERROR( "some error 1" );

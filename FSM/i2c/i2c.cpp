@@ -15,6 +15,7 @@
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <linux/i2c-dev.h>
+#include <byteswap.h>
 #include "I2C_Exceptions.h"
 #include <boost/unordered_map.hpp>
 #include "../log.h"
@@ -69,6 +70,13 @@ void i2c::write_register_byte(char reg, char val) {
 short int i2c::read_register_word(char reg) {
 	LOG << "entering i2c read_register";
 	return(i2c_smbus_read_word_data(deviceHandle, reg));
+}
+
+
+short int i2c::read_register_word_swapped(char reg) {
+	// convienence function to cope with endian difference of word.
+	LOG << "entering i2c read_register_swapped";
+	return(bswap_16(read_register_word(reg)));
 }
 
 void i2c::write_register_word(char reg, short int val) {

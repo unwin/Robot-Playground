@@ -57,11 +57,10 @@ void L3G4200D::setup(int scale) {
 	i2c_bus->write_register_byte(CTRL_REG5, 0b00000000);
 };
 
-void L3G4200D::read_gyro() {
-	short int x = i2c_bus->read_register_word(OUT_X_L);
-	short int y = i2c_bus->read_register_word(OUT_Y_L);
-	short int z = i2c_bus->read_register_word(OUT_Z_L);
-	LOG << "x = " << x << " Y = " << y << " z = " << z;
+void L3G4200D::read_gyro(short int &x, short int &y, short int &z) {
+	x = i2c_bus->read_register_word(OUT_X_L);
+	y = i2c_bus->read_register_word(OUT_Y_L);
+	z = i2c_bus->read_register_word(OUT_Z_L);
 
 };
 

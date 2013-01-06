@@ -72,7 +72,7 @@ class L3G4200D {
 		~L3G4200D();
 		void setup(int scale);
 		//bool set_g_range(char range);
-		void read_gyro();
+		void read_gyro(short int &x, short int &y, short int &z);
 };
 
 

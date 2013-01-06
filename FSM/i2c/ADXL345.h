@@ -12,9 +12,9 @@
 // test
 #define DEVID 0x00 				// RO - Device ID
 #define THRESH_TAP 0x1D 		// RW - Tap threshold
-#define OFSX 0x1E 				// RW - X axis offset
-#define OFSY 0x1F 				// RW - Y axis offset
-#define OFSZ 0x20 				// RW - Z axis offset
+#define X_OFFSET 0x1E 			// RW - X axis offset
+#define Y_OFFSET 0x1F 			// RW - Y axis offset
+#define Z_OFFSET 0x20 			// RW - Z axis offset
 #define DUR 0x21 				// RW - Tap duration
 #define LATENT 0x22 			// RW - Tap latency
 #define WINDOW 0x23				// RW - Tap window
@@ -64,7 +64,8 @@ class ADXL345 {
 		ADXL345(int id);
 		~ADXL345();
 		bool set_g_range(char range);
-		void read_acceleration();
+		void calibrate();
+		void read_acceleration(float &x, float &y, float &z);
 };
 
 

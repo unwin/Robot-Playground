@@ -7,12 +7,29 @@
 
 #include "i2c.h"
 
-class BMP085 : public i2c {
+class BMP085 {
 	private:
-		int i2c_bus;
+		int i2c_bus_id;
+		i2c *i2c_bus;
+		int device_id;
+		unsigned short int ac1;
+		unsigned short int ac2;
+		unsigned short int ac3;
+		unsigned short int ac4;
+		unsigned short int ac5;
+		unsigned short int ac6;
+		unsigned short int b1;
+		unsigned short int b2;
+		unsigned short int mb;
+		unsigned short int mc;
+		unsigned short int md;
+
 	public:
 		BMP085(int id);
 		~BMP085();
+		void read_data();
+		//unsigned short int read_int(unsigned char address);
+		void calibrate();
 };
 
 
