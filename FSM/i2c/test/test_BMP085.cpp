@@ -27,7 +27,8 @@ BOOST_AUTO_TEST_CASE(test_BMP085)
 	BMP085 *bmp085 = new BMP085(1);
 
 	while (1) {
-		bmp085->read_data();
+		LOG << "TEMP = " << bmp085->get_temperature() << "C";
+		LOG << "ALTITUDE = " << bmp085->get_altitude();
 		sleep(1);
 	}
 
